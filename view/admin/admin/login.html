@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>{$smarty.const.APP_NAME}登录</title>
+    <link href="{$smarty.const.CSS_URL}/bootstrap.min.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/animate.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/plugins/sweetalert/sweetalert.css"  rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/style.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/login.css?v=1.01" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+
+</head>
+
+<body class="signin ">
+    <div class="title" style="text-align: center;margin-top: 100px ;letter-spacing:8px;">
+        <h1>{$smarty.const.APP_NAME}</h1>
+    </div>
+    <div class="signinpanel animated fadeInDown">
+        <br /><br /><br />
+
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <div class="logopanel m-b">
+
+                    </div>
+                    <!--<div class="m-b"></div>
+                    <h4>欢迎使用 <strong>{$smarty.const.APP_NAME}后台业务</strong></h4>
+                    <ul class="m-b">
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 报警提醒</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 关键截图</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 算法添加</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 管理摄像头</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 摄像头关联算法</li>
+                    </ul>-->
+
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="form">
+                    <form method="post" action="">
+                        <h4 class="no-margins">登录：</h4>
+                        <!--<p class="m-t-md">{$smarty.const.APP_NAME}</p>-->
+                        <input type="text" class="form-control uname" name="adminName" placeholder="用户名" />
+                        <input type="password" class="form-control pword m-b" name="adminPwd" placeholder="密码" autocomplete='psaaword'/>
+                        <button class="btn btn-success btn-block">登录</button>
+                        <hr />
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="signup-footer">
+            <div class="pull-left">
+                &copy; 2019 All Rights Reserved. 广景视觉
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="{$smarty.const.JS_URL}/jquery.min.js"></script>
+<script src="{$smarty.const.JS_URL}/bootstrap.min.js"></script>
+<script src="{$smarty.const.JS_URL}/plugins/sweetalert/sweetalert.min.js"></script>
+<script>
+
+   // popup.loginError();
+
+
+
+
+
+    /* var _html='<div class="user"><p>姓名：</p><input type="text" name="" id="user" value="" /><br /><p>密码：</p><input type="password" id="pwd" name="" /><br /> <button id="login">登陆</button> </div>';
+     swal({
+         title: "HTML <small>标题</small>!",
+         text: _html+"自定义<span style='color:#F8BB86'>html<span>信息。",
+             html: true
+     });*/
+
+</script>
+
+</html>

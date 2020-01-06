@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title>{$smarty.const.APP_NAME}前台</title>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="view/common/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="view/common/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="view/common/css/animate.css" rel="stylesheet">
+    <link href="view/common/css/plugins/toastr/toastr.min.css?v=1.01 " rel="stylesheet">
+    <link href="{$smarty.const.JS_URL}/plugins/layer/skin/layer.css"  rel="stylesheet" >
+    <link href="view/common/css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+
+
+
+    </style>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden ;">
+    <div id="wrapper" >
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation"  style="width: 380px">
+            <div class="sidebar-collapse" >
+                <ul class="nav" id="side-menu">
+
+                    <li  >
+                        <!--logo -->
+                        <a href="http://guangjingshijue.com" style="margin: auto;text-align: center" about="black">
+                            <div class="dropdown profile-element">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 396 277">
+                                <metadata>
+                                    <?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+                                    <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c142 79.160924, 2017/07/13-01:06:39 ">
+                                        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                                            <rdf:Description rdf:about="" />
+                                        </rdf:RDF>
+                                    </x:xmpmeta>
+                                    <?xpacket end="w"?>
+                                </metadata>
+                                <image id="图层_0" data-name="图层 0" width="396" height="287" xlink:href="data:img/png;base64,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" />
+                            </svg></span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="J_menuItem" data-index="0">
+                            <i class="fa fa-video-camera"></i>
+                            <span class="nav-label">摄像头列表</span>
+                        </a>
+                    </li>
+
+                    {foreach $camera as $key=>$value}
+                    <li>
+                        <div class="iframe-div col-xs-8 col-md-12" onclick="changeBigImg( '{$value.algorithm_url}' )" >
+
+                            <div class="iframe-box embed-responsive embed-responsive-16by9" >
+                                <iframe name="iframe0"  class="embed-responsive-item" src="view/index/vod/{$value.algorithm_url}.html"></iframe>
+                            </div>
+                            <!--<a href="view/index/vod/{$value.algorithm_url}.html"></a>-->
+                            <div class="iframe-title" style="color: #000; background-color:rgba(255,255,255,0.3);z-index: 999">
+                                <p> 摄像头方位:<small><b>{$value.nick_name}</b></small></p>
+                                <p>当前算法:<small><b>{$value.algorithm_name}</b></small></p>
+                            </div>
+                        </div>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1" style="margin-left: 380px" >
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+                    <div class="navbar-header">
+                        <!--<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>-->
+                        <center><h2 style="color: #222;">广景视觉智能演示系统v2.12</h2></center>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+
+                        <li class="dropdown hidden-xs">
+                            <a class="right-sidebar-toggle" href="{$smarty.const.LOGIN_URL}" target="_blank">
+                                <i class="fa fa-tasks"></i>管理后台页面
+                            </a>
+
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+
+
+            <div class="row J_mainContent" id="content-main" style="height: calc(100% - 170px);">
+                <iframe id="showBigImgBox" class="J_iframe" name="iframe0" width="100%" height="100%" src="" frameborder="0" data-id="" seamless></iframe>
+            </div>
+
+            <div class="footer" style="padding: 0;margin: 0;height: 110px">
+                <div id="pictureShow" style="overflow: hidden;width: 100%;margin: auto;text-align: center">
+                    <img src="view/common/img/bg-black.png" alt="9" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="8" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="7" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="6" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="5" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="4" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="3" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="2" onclick="openHtml('','view/common/img/bg-black.png')">
+                    <img src="view/common/img/bg-black.png" alt="1" onclick="openHtml('','view/common/img/bg-black.png')">
+                </div>
+            </div>
+
+        </div>
+        <!--右侧部分结束-->
+
+    </div>
+
+    <!-- 全局js -->
+    <script src="view/common/js/jquery.min.js?v=2.1.4"></script>
+    <script src="view/common/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="view/common/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="view/common/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="view/common/js/plugins/toastr/toastr.min.js?v=1.01"></script>
+    <script src="{$smarty.const.JS_URL}/plugins/layer/layer.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="view/common/js/hplus.js?v=4.1.0"></script>
+    <script type="text/javascript" src="view/common/js/contabs.js"></script>
+
+    <!-- 第三方插件 -->
+    <script src="view/common/js/plugins/pace/pace.min.js"></script>
+    
+    <script src="view/common/js/socket.io.js"></script>
+
+    <script>
+        function getPicture() {
+            //demo test
+            var _num = parseInt((10 * Math.random()) % 3) + 1;
+            // return picture = 'view/common/img/p'+ _num +'.jpg';
+            return picture = 'img/p' + _num + '.jpg';
+        }
+
+        function addImg(picture) {
+            var textTest = document.getElementById('pictureShow');
+            //console.log( textTest.lastChild.alt);
+            // 1.获取图片
+            //picture = getPicture();
+
+            //2.删除最后一张图片
+            textTest.firstChild.remove();
+
+            textTest = document.getElementById('pictureShow');
+            //console.log( textTest);
+            // 3.将图片放入最顶部
+            var img = document.createElement('img');
+            img.setAttribute('src', picture);
+            img.setAttribute('style', 'height: 100px;width: 100px');
+            img.setAttribute('onclick', "openHtml('',"+picture+")");
+            textTest.appendChild(img);
+
+
+            //textTest.innerHTML = ' <img src="'+picture+'" align="1" /> '+textTest.innerHTML;
+        }
+
+        //		var uid = 'Head';
+        //		getImage(uid);
+
+        //alert( "{$camera[0]['algorithm_url']}" );
+
+//        .slimScrollbar{
+//            width:10px;
+//            opacity: 1;
+//            display: block;
+//        }
+
+
+        $(window).load(function() {
+            changeBigImg( "{$camera[0]['algorithm_url']}"  );
+
+            getImage();
+
+
+        });
+
+
+
+        function changeBigImg( alg ){
+
+
+            //1.切换算法，就是修改文件得属性,
+            //2
+            //alert("after:"+localStorage.getItem("NowAIname")+",now:"+alg);
+
+            if ( localStorage.getItem("NowAIname") != alg){
+                $.post("?c=index&a=changeAIStatus", { after: localStorage.getItem("NowAIname"), now: alg },
+                        function(data){
+                            console.log("change is ok!");
+                        });
+                localStorage.setItem("NowAIname",alg);
+            }
+
+
+
+
+
+
+            var showFrameUrl = 'view/index/vod/'+alg+'.html';
+            $("#showBigImgBox").attr('src',showFrameUrl);
+            //alert(123);
+        }
+        function getImage(){
+            console.log('action');
+            // 连接服务端
+            var socket = io('http://192.168.1.154:2120');
+
+            // 连接后登录
+            socket.on('connect', function(){
+                socket.emit('login', 'errorImage');
+            });
+            // 后端推送来消息时
+            socket.on('new_image', function(msg){
+                console.log(123)
+                addImg('data:image/png ;base64,'+msg)
+
+            });
+        }
+        function  openHtml(someName,someThing){
+            var _img = "<img src='" + someThing + "'/>";
+            layer.open({
+                title: false,
+                closeBtn: 0,
+                area: ['auto'],
+                skin: 'layui-layer-nobg', //没有背景色
+                shadeClose: true,
+                content: _img
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

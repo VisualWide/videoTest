@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		    <title>rtmp</title>
+			<meta charset="utf-8">
+		<script src="view/common/js/jquery.min.js?v=2.1.4"></script>
+		<script src="view/common/js/socket.io.js"></script>
+		<style>
+			body{
+				background-color: #191919;
+			}
+			.iframe-box{
+				width:330px;
+				height:260px;
+				display: inline-block;
+			}
+			img{
+				width: 200px;
+				height:200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<center><h2 style="color: #f1f1f1;">广景视觉智能演示系统</h2></center>
+		</div>
+		<div style="display: block">
+			<div class="iframe-box" >
+				<iframe name="iframe0" width="100%" height="100%" src="vod/Calling.html" frameborder="0" data-id="" seamless></iframe>
+			</div >
+			<div class="iframe-box" >
+				<iframe  name="iframe1" width="100%" height="100%" src="vod/Head.html" frameborder="0" data-id="" seamless></iframe>
+			</div>
+			<div class="iframe-box" >
+				<iframe name="iframe2" width="100%" height="100%" src="vod/Dangerous.html" frameborder="0" data-id="" seamless></iframe>
+			</div>
+			<div class="iframe-box" >
+				<iframe name="iframe3" width="100%" height="100%" src="vod/Smoking.html" frameborder="0" data-id="" seamless></iframe>
+			</div>
+		</div>
+		<div style="display: block">
+			<div class="iframe-box" >
+				<iframe name="iframe0" width="100%" height="100%" src="vod/Smoking.html" frameborder="0" data-id="" seamless></iframe>
+			</div >
+			<div class="iframe-box" >
+				<iframe  name="iframe1" width="100%" height="100%" src="vod/Smoking.html" frameborder="0" data-id="" seamless></iframe>
+			</div>
+			<div class="iframe-box" >
+				<iframe name="iframe2" width="100%" height="100%" src="vod/Smoking.html" frameborder="0" data-id="" seamless></iframe>
+			</div>
+			<div class="iframe-box" >
+				<iframe name="iframe3" width="100%" height="100%" src="vod/Smoking.html" frameborder="0" data-id="" seamless></iframe>
+			</div>
+			<button onclick="addImg()" >change</button>
+		</div>
+
+		<!--这个框中的是需要填写一个触发器，从最顶方添加，从最后方删除-->
+		<div id="pictureShow" style="overflow: hidden;width: 100%;height: 200px"><img src="view/common/img/bg-black.png" alt="8"><img src="view/common/img/bg-black.png" alt="7"><img src="view/common/img/bg-black.png" alt="6"><img src="view/common/img/bg-black.png" alt="5"><img src="view/common/img/bg-black.png" alt="4"><img src="view/common/img/bg-black.png" alt="3"><img src="view/common/img/bg-black.png" alt="2"><img src="view/common/img/bg-black.png" alt="1"></div>
+	</body>
+
+	<script>
+
+
+		function getPicture(){
+			var _num = parseInt( (10 * Math.random())%3 )+1;
+			return picture = 'view/common/img/p'+ _num +'.jpg';
+		}
+
+		function addImg(){
+			var textTest = document.getElementById('pictureShow');
+			//console.log( textTest.lastChild.alt);
+			// 1.获取图片
+			picture = getPicture();
+
+			//2.删除最后一张图片
+			textTest.firstChild.remove();
+
+			textTest = document.getElementById('pictureShow');
+			//console.log( textTest);
+			// 3.将图片放入最顶部
+			var img = document.createElement('img');
+			img.setAttribute('src', picture );
+			textTest.appendChild(img);
+
+
+			//textTest.innerHTML = ' <img src="'+picture+'" align="1" /> '+textTest.innerHTML;
+		}
+
+
+
+	</script>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>日志列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="{$smarty.const.CSS_URL}/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="{$smarty.const.JS_URL}/plugins/layer/skin/layer.css"  rel="stylesheet" >
+    <link href="{$smarty.const.CSS_URL}/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/animate.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<script src="{$smarty.const.JS_URL}/jquery.min.js?v=2.1.4"></script>
+<script src="{$smarty.const.JS_URL}/plugins/layer/layer.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>日志信息列表</h5>
+
+                            <div class="ibox-tools">
+
+                            </div>
+                        </div>
+                        <div class="ibox-content layer-photos-demo"  id="layer-photos-demo"  >
+                            <div class="row">
+
+                                <form  id="form1" action="" onsubmit="return false" method="post">
+                                    <div class="col-sm-2 m-b-xs">
+                                        <select id="waringTypeBtn"   class="form-control">
+                                            <option value="0"  > 全部算法 </option>
+                                            {foreach  $algorithmName as $items => $item}
+                                            <option value="{$item.Id}" > {$item.algorithm_name} </option>
+                                            {/foreach}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 m-b-xs">
+                                        <div class="form-group" id="data_5">
+                                            <div class="input-daterange input-group" id="datepicker">
+                                                <input type="text" class="input-sm form-control" name="start" value="2019-11-11" />
+                                                <span class="input-group-addon">到</span>
+                                                <input type="text" class="input-sm form-control" name="end" value="2019-11-17" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 m-b-xs">
+                                        <select id=""   class="form-control">
+                                            <option value="0"  > 全部摄像头 </option>
+                                            {foreach  $cameraName as $items => $item}
+                                            <option value="{$item.Id}" > {$item.nick_name} </option>
+                                            {/foreach}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1 m-b-xs" >
+                                        <button type="button" class="btn btn-info btn-small" onclick="searchSomeOne()" >筛选</button>
+                                    </div>
+                                </form>
+
+
+                                <div class="col-sm-2 m-b-xs">
+                                    <a type="button" class="btn btn-warning btn-small" onclick="printExcle()" style="float:right"><span><strong>打印</strong></span></a>
+                                </div>
+
+
+                                <!--<div class="col-sm-3">-->
+                                <!--<div class="input-group">-->
+                                <!--<input type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">-->
+                                <!--<button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>摄像头IP</th>
+                                        <th>报警类型</th>
+                                        <th>报警时间</th>
+                                        <th>报警图片</th>
+                                        <th>对比图片</th>
+                                        <th>处理状态</th>
+                                        <th>处理结果</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {foreach $logList as $key => $value }
+                                    <tr id="{$value.Id}">
+                                        <td class="project-status">
+                                            <span class="label label-primary">{$value.Id}</span>
+                                        </td>
+                                        <td class="project-status">
+                                            <span class="label ">{$value.nick_name}</span>
+                                        </td>
+                                        <td class="project-title">
+                                            <a >{$value.warning_type}</a>
+                                            <br/>
+                                        </td>
+                                        <td class="project-status">
+                                            {$value.warning_time}
+                                        </td>
+                                        <td class="project-status">
+                                            <a href="{$smarty.const.LOG_LIST_IMG_URI}{$value.warning_imgUrl}" title="{$value.nick_name}-{$value.warning_type}" data-gallery=""><img src="{$smarty.const.LOG_LIST_IMG_URI}{$value.warning_imgUrl}" alt="报警图片" width="60px" ></a>
+                                        </td>
+                                        <td class="project-status">
+                                            <a href="{$smarty.const.LOG_LIST_IMG_URI}{$value.after_imgUrl}" title="{$value.nick_name}-{$value.warning_type}" data-gallery=""> <img src="{$smarty.const.LOG_LIST_IMG_URI}{$value.after_imgUrl}" alt="对比图片" width="60px" ></a>
+                                        </td>
+
+
+                                       <!-- <td class="project-status">
+                                            <a  id="lookupA{$value.Id}" onclick="openHtml('{$value.warning_type}','{$smarty.const.LOG_LIST_IMG_URI}{$value.warning_imgUrl}')" class="btn btn-white btn-sm">
+                                                <img src="{$smarty.const.LOG_LIST_IMG_URI}{$value.warning_imgUrl}" alt="报警图片" width="60px" >
+                                            </a>
+                                        </td>
+                                        <td class="project-status">
+                                            <a  id="lookupB{$value.Id}" onclick="openHtml('{$value.warning_type}','{$smarty.const.LOG_LIST_IMG_URI}{$value.after_imgUrl}')" class="btn btn-white btn-sm">
+                                                <img src="{$smarty.const.LOG_LIST_IMG_URI}{$value.after_imgUrl}" alt="对比图片" width="60px" >
+                                            </a>
+                                        </td>-->
+                                        <td class="project-status">
+                                            {if $value.results ==0}
+                                            <a class="" style="color: #f00;" >未处理</a>
+                                            {else}
+                                            <a class=""  >已处理</a>
+                                            {/if}
+                                        </td>
+                                        <td class="project-status">
+
+                                            {if $value.results ==0}
+                                            <a class="btn btn-danger" onclick="getSomeOneOtherInfo('{$value.Id}')">未处理</a>
+                                            {else}
+                                            <a class="btn btn-info" onclick="showAlert('已经处理过了！')" >已处理</a>
+                                            {/if}
+
+
+                                        </td>
+                                    </tr>
+                                    {/foreach}
+
+
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <ul class="pagination pull-right"></ul>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                            </table>
+                        </div>
+
+                        <div id="blueimp-gallery" class="blueimp-gallery">
+                            <div class="slides"></div>
+                            <h3 class="title"></h3>
+                            <a class="prev">‹</a>
+                            <a class="next">›</a>
+                            <a class="close">×</a>
+                            <a class="play-pause"></a>
+                            <ol class="indicator"></ol>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- 全局js -->
+
+    <script src="{$smarty.const.JS_URL}/bootstrap.min.js?v=3.3.6"></script>
+    <script src="{$smarty.const.JS_URL}/plugins/footable/footable.all.min.js"></script>
+
+    <script src="{$smarty.const.JS_URL}/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+    <script src="{$smarty.const.JS_URL}/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+    <!-- 自定义js -->
+    <script src="{$smarty.const.JS_URL}/content.js?v=1.0.0"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.footable').footable();
+
+            $('#datepicker input').datepicker({
+                language: "zh-CN",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true
+            });
+
+        });
+        function showAlert(someThing){
+            layer.alert(someThing)
+        }
+
+        //弹出一个页面层
+        function  openHtml(someName,someThing){
+            var _img = "<img src='" + someThing + "'/>";
+            layer.open({
+                type: 1,
+                area: '704px',
+                title:someName,
+                maxmin: true,
+                shadeClose: true,
+                content: _img
+            });
+        }
+
+        function getSomeOneOtherInfo( $_id){
+            var otherInfo = null;
+            $.get("index.php?c=log&a=changeLogResults&id="+$_id, function(result){
+
+                // console.log(JSON.parse(result));
+                otherInfo=JSON.parse(result);
+                layer.alert(otherInfo);
+            });
+
+            location.reload();
+
+        }
+        /*刷新页面*/
+        $('#waringTypeBtn').change(function(){
+            // alert($(this).children('option:selected').val());
+            var selectedValues ='';
+            $("#waringTypeBtn :selected").each(function(){
+                selectedValues += $(this).val();
+            });
+            $.get("index.php?c=log&a=returnWaringContent&id="+selectedValues, function(result){
+
+
+                var otherInfo=JSON.parse(result);
+                //修改 页面文本
+                var addHtml ='';
+                for(var index in otherInfo){
+
+                    //console.log(otherInfo[index].Id);
+                    addHtml += '<tr id="'+otherInfo[index].Id+'">'+
+                            '<td class="project-status"><span class="label label-primary">'+otherInfo[index].Id+'</span></td>'+
+                            '<td class="project-status"><span class="label ">'+otherInfo[index].camera_ip+' </span></td>'+
+                            '<td class="project-title"><a >'+otherInfo[index].warning_type+'</a><br/></td>'+
+                            '<td class="project-status"> '+otherInfo[index].warning_time+'</td> '+
+                            '<td class="project-status"><a  id="lookupA'+otherInfo[index].Id+'" onclick="openHtml('+otherInfo[index].warning_type+','+"{$smarty.const.LOG_LIST_IMG_URI}" +otherInfo[index].warning_imgUrl+')" class="btn btn-white btn-sm">'+
+                            '<img src="{$smarty.const.LOG_LIST_IMG_URI}'+otherInfo[index].warning_imgUrl+'" alt="" width="60px" >'+
+                            '</a></td> <td class="project-actions">'
+
+                    if(otherInfo[index].results == 0 ){
+                        addHtml += ' <a class="btn btn-danger" onclick="getSomeOneOtherInfo('+otherInfo[index].Id+')">未处理</a>'
+                    }else{
+                        addHtml += ' <a class="btn btn-info" onclick="shwoAlert('+'已经处理过了'+')" >已处理</a>'
+                    }
+                    addHtml += ' </td></tr>'
+                }
+                $('#tbodyContent').html(addHtml);
+            });
+
+        })
+        function  searchSomeOne(){
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "index.php?c=log&a=searchSomeOne" ,//url
+                data: $('#form1').serialize(),
+                success: function (result) {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    if (result.resultCode == 200) {
+                        alert("SUCCESS");
+                    }
+                    ;
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>报警列表</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="view/common/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="view/common/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="view/common/css/animate.css" rel="stylesheet">
+    <link href="view/common/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<script src="view/common/js/jquery.min.js?v=2.1.4"></script>
+<script src="view/common/js/plugins/layer/layer.min.js"></script>
+<body class="gray-bg">
+
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>报警信息列表</h5>
+
+                        <div class="ibox-tools">
+                            <!--创建新项目-->
+                            <!--<a href="#add_project" data-toggle="modal" class="btn btn-primary btn-xs">添加报警</a>-->
+                            <div id="add_project" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog" style="width: 80%">
+                                    <form role="form" method="post" action="?c=alert&a=add" enctype="multipart/form-data">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h3 class="m-t-none m-b">创建报警</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12 b-r">
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-4">算法名称</div>
+                                                            <div class="col-sm-8"  >
+
+                                                                <select  name="algorithm_id">
+                                                                    {foreach  $algorithmName as $items => $item}
+                                                                         <option value="{$item.Id}" >{$item.algorithm_name}</option>
+                                                                    {/foreach}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="form-group">
+                                                            <div class="col-sm-4">醒目弹窗</div>
+                                                            <div class="col-sm-8">
+
+                                                                <select  name="is_alert" style="width: 28%">
+                                                                    <option value="是" >是</option>
+                                                                    <option value="否" >否</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-4">语音播报</div>
+                                                            <div class="col-sm-8">
+
+                                                                <select  name="is_broadcast" style="width: 28%">
+                                                                    <option value="是" >是</option>
+                                                                    <option value="否" >否</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-4">报警内容</div>
+                                                            <div class="col-sm-8">
+                                                                <input  name="alert_content"  placeholder="报警内容"  value="">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <input type="submit" name="submit" class="btn btn-success" value="添加">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="project-list">
+
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>报警ID</th>
+                                    <th>关联的算法</th>
+                                    <th>醒目弹窗</th>
+                                    <th>语音播报</th>
+                                    <th>报警内容</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {foreach $alert as $key => $value }
+                                <tr id="{$value.Id}">
+                                    <td class="project-status">
+                                        <span class="label label-primary">{$value.Id}</span>
+                                    </td>
+                                    <td class="project-status">
+                                      {$value.algorithm_name}
+                                    </td>
+                                    <td class="project-status">
+                                        {$value.is_alert}
+                                    </td>
+                                    <td class="project-status">
+                                        {$value.is_broadcast}
+                                    </td>
+                                    <td class="project-title">
+                                        <a >{$value.alert_content}</a>
+                                        <br/>
+                                    </td>
+                                    <td class="project-status">
+                                        <a data-toggle="modal" href="#modal-form{$value.Id}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 编辑 </a>
+                                        <!--<a class="btn btn-danger" href="?c=alert&a=del&id={$value.Id}">删除</a>-->
+
+                                        <div id="modal-form{$value.Id}" class="modal fade" aria-hidden="true">
+                                            <div class="modal-dialog" style="width: 80%">
+                                                <form role="form" method="post" action="?c=alert&a=update" enctype="multipart/form-data">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            <h3 class="m-t-none m-b">修改内容</h3>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 b-r">
+
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-4">ID</div>
+                                                                        <div class="col-sm-8">
+                                                                            <input  name="Id" readonly  placeholder="报警ID"  value="{$value.Id}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-4">算法名称</div>
+                                                                        <div class="col-sm-8"  >
+
+                                                                         <select  name="algorithm_id" disabled="disabled" >
+                                                                             {foreach  $algorithmName as $items => $item}
+                                                                                 {if  $item.algorithm_name == $value.algorithm_name}
+                                                                                        <option value="{$item.Id}" selected>{$item.algorithm_name}</option>
+                                                                                     {else}
+                                                                                        <option value="{$item.Id}" >{$item.algorithm_name}</option>
+                                                                                 {/if}
+                                                                             {/foreach}
+                                                                         </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br />
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-4">醒目弹窗</div>
+                                                                        <div class="col-sm-8">
+
+                                                                            <select  name="is_alert" style="width: 28%">
+                                                                                <option value="{$value.is_alert}" selected  >{$value.is_alert}</option>
+                                                                                {if $value.is_alert == '是'}
+                                                                                <option value="否" >否</option>
+                                                                                {/if}
+                                                                                {if $value.is_alert == '否'}
+                                                                                <option value="是" >是</option>
+                                                                                {/if}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-4">语音播报</div>
+                                                                        <div class="col-sm-8">
+
+                                                                            <select  name="is_broadcast" style="width: 28%">
+                                                                                <option value="{$value.is_broadcast}"  selected>{$value.is_broadcast}</option>
+                                                                                {if $value.is_broadcast == '是'}
+                                                                                <option value="否" >否</option>
+                                                                                {else}
+                                                                                <option value="是" >是</option>
+                                                                                {/if}
+
+
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-4">报警内容</div>
+                                                                        <div class="col-sm-8">
+                                                                            <input  name="alert_content"  placeholder="报警内容"  value="{$value.alert_content}">
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <input type="submit" name="submit" class="btn btn-success" value="修改">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- 全局js -->
+
+    <script src="view/common/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="view/common/js/content.js?v=1.0.0"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('#loading-example-btn').click(function () {
+                btn = $(this);
+                simpleLoad(btn, true)
+
+                // Ajax example
+//                $.ajax().always(function () {
+//                    simpleLoad($(this), false)
+//                });
+                simpleLoad(btn, false)
+            });
+        });
+
+        function shwoAlert(someThing){
+            layer.alert(someThing)
+        }
+
+        function simpleLoad(btn, state) {
+            if (state) {
+                btn.children().addClass('fa-spin');
+                btn.contents().last().replaceWith(" Loading");
+            } else {
+                setTimeout(function () {
+                    btn.children().removeClass('fa-spin');
+                    btn.contents().last().replaceWith(" Refresh");
+                }, 2000);
+            }
+        }
+
+
+        ///
+        //弹出一个页面层
+        function  openHtml(someName,someThing){
+            layer.open({
+                type: 2,
+                area: ['700px', '450px'],
+                fixed: false, //不固定
+                title:someName,
+                maxmin: true,
+                content: someThing
+            });
+        }
+        function openHtml2(){
+            layer.open({
+                type: 2,
+                area: ['700px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: 'test/iframe.html'
+            });
+        }
+
+        function PreviewImage(fileObj, imgPreviewId, divPreviewId) {
+            var allowExtention = ".jpg,.bmp,.gif,.png"; //允许上传文件的后缀名document.getElementById("hfAllowPicSuffix").value;
+            var extention = fileObj.value.substring(fileObj.value.lastIndexOf(".") + 1).toLowerCase();
+            var browserVersion = window.navigator.userAgent.toUpperCase();
+            if (allowExtention.indexOf(extention) > -1) {
+                if (fileObj.files) { //HTML5实现预览，兼容chrome、火狐7+等
+                    if (window.FileReader) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById(imgPreviewId).setAttribute("src", e.target.result);
+                        }
+                        reader.readAsDataURL(fileObj.files[0]);
+                    } else if (browserVersion.indexOf("SAFARI") > -1) {
+                        alert("不支持Safari6.0以下浏览器的图片预览!");
+                    }
+                } else if (browserVersion.indexOf("MSIE") > -1) {
+                    if (browserVersion.indexOf("MSIE 6") > -1) { //ie6
+                        document.getElementById(imgPreviewId).setAttribute("src", fileObj.value);
+                    } else { //ie[7-9]
+                        fileObj.select();
+                        if (browserVersion.indexOf("MSIE 9") > -1)
+                            fileObj.blur(); //不加上document.selection.createRange().text在ie9会拒绝访问
+                        var newPreview = document.getElementById(divPreviewId + "New");
+                        if (newPreview == null) {
+                            newPreview = document.createElement("div");
+                            newPreview.setAttribute("id", divPreviewId + "New");
+                            newPreview.style.width = document.getElementById(imgPreviewId).width + "px";
+                            newPreview.style.height = document.getElementById(imgPreviewId).height + "px";
+                            newPreview.style.border = "solid 1px #d2e2e2";
+                        }
+                        newPreview.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale',src='" + document.selection.createRange().text + "')";
+                        var tempDivPreview = document.getElementById(divPreviewId);
+                        tempDivPreview.parentNode.insertBefore(newPreview, tempDivPreview);
+                        tempDivPreview.style.display = "none";
+                    }
+                } else if (browserVersion.indexOf("FIREFOX") > -1) { //firefox
+                    var firefoxVersion = parseFloat(browserVersion.toLowerCase().match(/firefox\/([\d.]+)/)[1]);
+                    if (firefoxVersion < 7) { //firefox7以下版本
+                        document.getElementById(imgPreviewId).setAttribute("src", fileObj.files[0].getAsDataURL());
+                    } else { //firefox7.0+
+                        document.getElementById(imgPreviewId).setAttribute("src", window.URL.createObjectURL(fileObj.files[0]));
+                    }
+                } else {
+                    document.getElementById(imgPreviewId).setAttribute("src", fileObj.value);
+                }
+            } else {
+                alert("仅支持" + allowExtention + "为后缀名的文件!");
+                fileObj.value = ""; //清空选中文件
+                if (browserVersion.indexOf("MSIE") > -1) {
+                    fileObj.select();
+                    document.selection.clear();
+                }
+                fileObj.outerHTML = fileObj.outerHTML;
+            }
+            return fileObj.value;    //返回路径
+        }
+
+
+        function getSomeOneOtherInfo( $_id){
+            var otherInfo = null;
+            $.get("index.php?c=log&a=changeLogResults&id="+$_id, function(result){
+
+               console.log(JSON.parse(result));
+                otherInfo=JSON.parse(result);
+                layer.alert(otherInfo);
+            });
+            location.reload();
+
+        }
+    </script>
+
+
+    </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>{$smarty.const.APP_NAME}注册</title>
+    <link href="{$smarty.const.CSS_URL}/bootstrap.min.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/animate.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/plugins/sweetalert/sweetalert.css"  rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/style.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/login.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+
+</head>
+
+<body class="signin ">
+    <div class="signinpanel animated fadeInDown">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <div class="logopanel m-b">
+                        <h1>{$smarty.const.APP_NAME}</h1>
+                    </div>
+                    <div class="m-b"></div>
+                    <h4>欢迎使用 <strong>{$smarty.const.APP_NAME}后台业务</strong></h4>
+                    <ul class="m-b">
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 信息一(tianqi)</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 信息二</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 信息三</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 信息四</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 信息五</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form method="post" action="" id="signupForm">
+                    <h4 class="no-margins">注册：</h4>
+                    <p class="m-t-md">{$smarty.const.APP_NAME}后台管理系统</p>
+                    <input type="text" class="form-control uname" id="adminName" name="adminName" placeholder="电子邮箱" />
+
+                    <div class="input-group">
+                        <input  style="color: #000;" type="text" id="code" class="form-control" name="validate" placeholder="邮箱验证码.">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" id="getValidate"  type="button" >点击获取</button>
+                        </span>
+                    </div><!-- /input-group -->
+                    <input type="password" class="form-control pword m-b" id="adminPwd" name="adminPwd" placeholder="密码，8-16位数字和字母的组合（区分大小写）" autocomplete='psaaword'/>
+                    <input type="password" class="form-control pword m-b" id="reAdminPwd" name="reAdminPwd" placeholder="确认密码" autocomplete='psaaword'/>
+                    <button class="btn btn-success btn-block">注册</button>
+                    <hr />
+                    <strong>已有账号？ <a href="{$smarty.const.LOGIN_URL}">立即登陆&raquo;</a></strong>
+                   <!-- <h4>第三方登录</h4>
+                    <span>QQ</span> &nbsp;&nbsp;&nbsp;&nbsp;<span>微博</span>-->
+                </form>
+            </div>
+        </div>
+        <div class="signup-footer">
+            <div class="pull-left">
+                <!--<a href="{$Think.config.url.hostUrl}/Admin/admin/chat">layer聊天</a>-->
+                <!--&copy; 2015 All Rights Reserved. H+-->
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="{$smarty.const.JS_URL}/jquery.min.js"></script>
+<script src="{$smarty.const.JS_URL}/bootstrap.min.js"></script>
+<script src="{$smarty.const.JS_URL}/plugins/sweetalert/sweetalert.min.js"></script>
+<!--jquery validate-->
+<script src="{$smarty.const.JS_URL}/plugins/validate/jquery.validate.min.js"></script>
+<script src="{$smarty.const.JS_URL}/plugins/validate/messages_zh.min.js"></script>
+
+<script src="{$smarty.const.JS_URL}/demo/form-validate-demo.js"></script>
+<script>
+
+    document.getElementById('getValidate').onclick=getValidate;
+    var descTime;
+
+    function  getValidate(){
+
+        //alert(this.innerHTML)
+    //业务逻辑：1.不能点击点击,2发送邮件
+        //alert(document.getElementsByName('adminName')[0].value)
+        document.getElementById('getValidate').setAttribute('disabled','');
+        ajax("?c=admin&a=sendEmail",'email='+document.getElementsByName('adminName')[0].value)
+
+        setTimeout(function(){
+            document.getElementById('getValidate').removeAttribute('disabled')
+            document.getElementById('getValidate').innerText='点击获取';
+            clearInterval(descTime)
+        },60000)
+    }
+    function daojishi(){
+        var longTime=60;    //倒计时时长
+        descTime = setInterval(function(){
+            document.getElementById('getValidate').innerText=--longTime+' s ';
+        },1000)
+    }
+
+    function ajax(_url,_data){
+        //console.log(_data);
+        var hxp;
+        if(window.XMLHttpRequest){
+            hxp=new XMLHttpRequest();
+        }else{
+            hxp=new ActiveXObject();
+        }
+        hxp.open("get",_url+"&"+_data,true);
+        hxp.send();
+        hxp.onreadystatechange=function(){
+            if( hxp.status == 200 && hxp.readyState == 4 ){
+                var needText=hxp.responseText;
+                daojishi();
+                console.log(needText);
+
+            }
+
+        }
+    }
+
+
+</script>
+
+</html>

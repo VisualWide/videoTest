@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+    <style>
+
+        .main{
+            /*position: absolute;*/
+            /*top:50%;*/
+            /*left:50%;*/
+           /*transform: translate(-50%,-50%);*/
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin:auto;
+            height: 200px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>NOT FOUND 404</h1>
+        <a href="{$smarty.const.LOGIN_URL}">自动跳转请点击</a>
+        <p>还有 <span id="daojishi">5</span>后自动跳转</p>
+    </div>
+
+</body>
+<script>
+    window.onload=function(){
+        var daojishi=document.getElementById("daojishi").innerHTML;
+        var _url="{$smarty.const.LOGIN_URL}";
+        var shaoID=setInterval(function(){
+            daojishi--;
+            if(daojishi!=-1){
+                console.log(daojishi);
+                document.getElementById("daojishi").innerHTML=daojishi;
+
+            }else{
+                clearInterval(shaoID)
+                location.href=_url;
+            }
+        },1000);
+    }
+</script>
+</html>

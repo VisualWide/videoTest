@@ -1,0 +1,1 @@
+Mysql_conf = { 'host' : '58.87.97.190', 'user' : 'root', 'pwd' : 'WangLin123!Run', 'databases' : 'vod' }

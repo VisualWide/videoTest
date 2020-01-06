@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		    <title>rtmp</title>
+			<meta charset="utf-8">
+		<script src="../../../view/common/js/jquery.min.js?v=2.1.4"></script>
+		<script src="../../../view/common/js/socket.io.js"></script>
+		<style>
+			body{background-color: #191919;width:90%;height:100%;}
+		</style>
+	</head>
+	<body>
+	<div style="">
+		<img id="video" style="height:60%;width: 73%;margin-left: 15%"  alt="image" class="img-responsive" src="../../../view/common/img/bg-black.png">
+	</div>
+
+	</body>
+	<script>
+		var uid = 'Calling';
+		$(document).ready(function () {
+			$('.file-box').each(function () {
+				animationHover(this, 'pulse');
+			});
+
+			var video=$('#video')[0];
+
+			// 连接服务端
+			var socket = io('http://192.168.1.154:2120');
+			// 连接后登录
+			socket.on('connect', function(){
+				socket.emit('login', uid);
+			});
+			// 后端推送来消息时
+			socket.on('new_img', function(msg){
+				//console.log(123)
+				video.src = 'data:image/png ;base64,'+msg
+
+			});
+		});
+	</script>
+
+</html>
+
+
+

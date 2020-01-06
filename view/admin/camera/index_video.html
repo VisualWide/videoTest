@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄像头</title>
+    <link rel="shortcut icon" href="favicon.ico"> <link href="{$smarty.const.CSS_URL}/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/animate.css" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/style.css?v=4.1.0" rel="stylesheet">
+    <link href="{$smarty.const.CSS_URL}/video-js.css" rel="stylesheet">
+</head>
+<script src="view/common/js/jquery.min.js?v=2.1.4"></script>
+<script src="view/common/js/plugins/layer/layer.min.js"></script>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12 animated fadeInRight">
+                <div class="row">
+                
+                    <div class="col-sm-2">
+
+                        {foreach $camera as $key=>$value}
+                            <div class="file-box" >
+                                <div class="file">
+
+                                        <span class="corner"></span>
+
+                                        <div class="video">
+                                        <!--
+                                            <img alt="image" class="img-responsive" src="{$smarty.const.IMG_URL}/camera.png">
+                                        -->
+                                            <!--  ci chu tianjia  shipin xianshi -->
+                                        
+                                            <video id="my-video{$value.Id}" class="video-js"  preload="auto" autoplay preload="none" width="320" height="150"  data-setup="{}">
+                                                    <source src="rtmp://192.168.0.103:65500/live/{$value.Id}" type="rtmp/flv">
+                                            </video>
+                                        </div>
+                                    <a  onclick="openHtml('123','123')">
+                                        <div class="video-name">
+                                            摄像头ID:<small>{$value.Id}</small>
+                                            
+                                            <br/>
+                                            摄像头方位:<small><b>{$value.nick_name}</b></small>
+
+                                            <br/>
+                                            当前算法:<small><b>{$value.area}</b></small>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                        {/foreach}
+
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+
+    <script src="view/common/js/bootstrap.min.js?v=3.3.6"></script>
+    
+    <script src="view/common/js/videojs-ie8.min.js"></script>
+			<script src="view/common/js/video.js"></script>
+
+    <!-- 自定义js -->
+    <script src="view/common/js/content.js?v=1.0.0"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.file-box').each(function () {
+                animationHover(this, 'pulse');
+            });
+            videojs.options.flash.swf = 'view/common/js/video-js.swf';
+        });
+
+
+        function  openHtml(someName,someThing){
+            layer.open({
+                type: 2,
+                title: someName,
+                area: ['640px', '360px'],
+                shade: 0.8,
+                closeBtn: 0,
+                shadeClose: true,
+                content: 'http://192.168.0.103/videoTest/vod.html'
+            });
+        }
+
+        function openHtml2(){
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['630px', '360px'],
+                shade: 0.8,
+                closeBtn: 0,
+                shadeClose: true,
+                content: '//player.youku.com/embed/XMjY3MzgzODg0'
+            });
+        }
+    </script>
+
+
+</body>
+
+</html>
